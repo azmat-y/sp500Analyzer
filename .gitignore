@@ -1,1 +1,6 @@
 venv
+*.pickle
+stocks_dfs
+stocks_dfs_AdjClose
+*.xlsx
+*#
