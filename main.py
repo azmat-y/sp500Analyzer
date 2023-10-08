@@ -5,6 +5,7 @@ import os
 import datetime as dt
 import yfinance as yf
 import pandas as pd
+
 from bs4 import BeautifulSoup
 
 def grab_tickers(reload=False):
@@ -22,10 +23,14 @@ def grab_tickers(reload=False):
         return tickers
 
     # if reload is False we will assume the file is already there
-    with open('sp500tickers.pickle', 'rb') as f:
-        tickers = pickle.load(f)
-        # print(tickers)
-        return tickers
+    try:
+        with open('sp500tickers.pickle', 'rb') as f:
+             tickers = pickle.load(f)
+    except FileNotFoundError as e:
+        print(e, 'Reload tickers!')
+        exit(1)
+
+    return tickers
 
 def get_data_for_ticker(reload_data=False, reload_tickers=False):
     tickers = grab_tickers(reload=reload_tickers)
@@ -56,7 +61,6 @@ def get_adj_close():
     tickers = grab_tickers()
     if not os.path.exists('stocks_dfs_AdjClose'):
         os.makedirs('stocks_dfs_AdjClose')
-
     for ticker in tickers:
         if not os.path.exists(f'stocks_dfs_AdjClose/{ticker}.csv'): # edit
             df = pd.read_csv(f'stocks_dfs/{ticker}.csv')
@@ -112,10 +116,17 @@ def portfolio_input(final_df):
 
 # get_data_for_ticker(reload_data=True)
 
+def generate_order_sheet(df):
+    df.to_excel('strategy.xlsx', index=False)
+    return
+
 def main():
-    reload = input('Do you want to reload tickers y/n').lower()
+    reload = input('Do you want to reload tickers y/n ').lower()
     flag = True if reload == 'y' else False
-    get_data_for_ticker(reload_tickers=flag)
+    get_data_for_ticker(reload_data=True, reload_tickers=flag)
     get_adj_close()
-    df = portfolio_input(final_df)
+    df = portfolio_input(final_df())
     print(df)
+    generate_order_sheet(df)
+
+main()
