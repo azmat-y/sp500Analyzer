@@ -1,0 +1,1 @@
+* if there is no stock data in stocks_dfs tickers need to be reloaded
