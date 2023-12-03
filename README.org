@@ -1,1 +1,2 @@
-* if there is no stock data in stocks_dfs tickers need to be reloaded
+* If there is no stock data in stocks_dfs tickers need to be reloaded
+stock_dfs is the directory created when main.py is run for the first time and the tickers are relaoded
