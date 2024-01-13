@@ -1,2 +1,12 @@
-* If there is no stock data in stocks_dfs tickers need to be reloaded
-stock_dfs is the directory created when main.py is run for the first time and the tickers are relaoded
+* What it does?
+sp500Analyzer like it name suggests is a script that downloads the stock of the companies that are listed in the S&P500 index fund through yfinance (the name of companies taken from wikipedia for simplicity), after which it redistributes the portfolio given between the top 50 companies (according to their performace the previous year).
+
+* How to run?
+#+begin_src bash
+git clone https://github.com/azmat-y/sp500Analyzer.git
+cd sp500Analyzer
+python -m venv ./venv
+source venv/bin/activate
+pip install -r requirements.txt
+python main.py
+#+end_src
